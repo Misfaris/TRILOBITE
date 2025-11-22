@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 30.0f;
+    public float speed = 5.0f;
     public float verticalInput;
     public float horizontalInput;
     public float xRange = 36;
@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     {
         //On this GameObject (the Trilobite), find the Rigidbody component and store it inside rb
         trilobiteRb = GetComponent<Rigidbody>();
+        //Stop Trilobite from tipping over
+        trilobiteRb.freezeRotation = true;
     }
 
     // Update is called once per frame
@@ -22,11 +24,15 @@ public class PlayerController : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
 
+    }
+
+    private void FixedUpdate()
+    {
         //Move Trilobite forward
-        trilobiteRb.AddForce(Vector3.back * (speed * verticalInput));
+        trilobiteRb.AddForce(Vector3.back * speed * verticalInput, ForceMode.VelocityChange);
 
         //Move Trilobite side to side
-        trilobiteRb.AddForce(Vector3.left * (speed * horizontalInput));
+        trilobiteRb.AddForce(Vector3.left * speed * horizontalInput, ForceMode.VelocityChange);
 
         //Keep Trilobite in bounds
         if (transform.position.x < -xRange)
@@ -37,8 +43,6 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y, -zRange);
         if (transform.position.z > zRange)
             transform.position = new Vector3(transform.position.x, transform.position.y, zRange);
-        
-        //Stop Trilobite from tipping over
-        trilobiteRb.freezeRotation = true;
     }
+
 }
