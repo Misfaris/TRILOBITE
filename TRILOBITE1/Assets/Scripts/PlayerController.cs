@@ -2,15 +2,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5.0f; //side-to-side speed (lane movement)
-    public float verticalInput;
-    public float horizontalInput;
-    public float xRange = 9.0f; //how far left/right from the rail centre
-    public float zRange = 100; //not used for rail movement, kept for reference
-    private float laneOffset = 0f; //current left/right offset from the rail
+    public float xRange = 15.0f; //how far left/right from the rail centre
+    private int currentLane = 0; //current lane
     private Vector3 startLocalPos; // starting local position for LaneOffset
-    public float laneSnapSpeed = 25.0f; //how quickly it snaps to the target lane offset
-    //private Rigidbody trilobiteRb; now using Spline Animate on TrilobiteRoot, so all Rigidbody code removed
+    public float laneSnapSpeed = 30.0f; //how quickly it snaps to the target lane offset
+    private float laneOffset; // current x offset we are applying relative to startLocalPos
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
@@ -22,21 +18,26 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        verticalInput = Input.GetAxisRaw("Vertical");
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-
-        //Move Trilobite is automatic and controlled by the Spline Animate component on TrilobiteRoot
+        //Move Trilobite forwards is controlled by Spline Animate on TrilobiteRoot
         
         //Move Trilobite side to side
-        //This snaps the lane offset instantly based on input.
-        laneOffset = horizontalInput * xRange;
+        
+        // This changes lane ONCE per key press and stays there
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            currentLane = Mathf.Max(currentLane - 1, -1);
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+            currentLane = Mathf.Min(currentLane + 1, 1);
+        
+        //Convert lane index
+        float targetOffset = currentLane * xRange;
 
         
         //Keep Trilobite in bounds
 
-        //Clamp the lane offset so the player cannot move too far away from the rail centre.
-        laneOffset = Mathf.Clamp(laneOffset, -xRange, xRange);
-
+        //Control how fast it slides.
+        laneOffset = Mathf.Lerp(laneOffset, targetOffset, laneSnapSpeed * Time.deltaTime);
+        
         //Apply the lane offset after Spline Animate has positioned the object this frame.
         transform.localPosition = startLocalPos + new Vector3(laneOffset, 0f, 0f);
 
