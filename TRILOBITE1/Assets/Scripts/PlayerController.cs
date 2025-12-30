@@ -35,10 +35,10 @@ public class PlayerController : MonoBehaviour
         
         //Keep Trilobite in bounds
 
-        //Control how fast it slides.
+        //Control how fast it slides
         laneOffset = Mathf.Lerp(laneOffset, targetOffset, laneSnapSpeed * Time.deltaTime);
         
-        //Apply the lane offset after Spline Animate has positioned the object this frame.
+        //Apply the lane offset after Spline Animate has positioned the object this frame
         transform.localPosition = startLocalPos + new Vector3(laneOffset, 0f, 0f);
 
     }
