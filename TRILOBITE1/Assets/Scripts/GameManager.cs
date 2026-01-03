@@ -1,21 +1,25 @@
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 
 {
+    public TextMeshProUGUI winText;
+    public TextMeshProUGUI gameOverText;
+    public GameObject introPanel;
+    private bool runStarted;
+    private bool runOver;
+
     public static GameManager Instance;
     // This is a STATIC reference to the only GameManager, "static" means it belongs to the class itself
     // I create this Instance to allow other scripts to call it
 
-    private bool runOver;
-    // This tracks whether the run has already ended
-
     private void Awake()
-    // Awake() is called by Unity before Start()
-    
+        // Awake() is called by Unity before Start()
+
     {
         if (Instance != null)
-        // If an Instance already exists, it means there's already a GameManager in the scene
+            // If an Instance already exists, it means there's already a GameManager in the scene
         {
             Destroy(gameObject);
             // Destroy THIS GameManager so we don’t end up with two
@@ -27,44 +31,85 @@ public class GameManager : MonoBehaviour
         // If no GameManager exists yet, this object becomes the Instance
         // From now on, other scripts can access it
     }
-    
-    
+
+    private void Start()
+    {
+        Time.timeScale = 0;
+        runStarted = false;
+        runOver = false;
+        introPanel.gameObject.SetActive(true);
+        gameOverText.gameObject.SetActive(false);
+        winText.gameObject.SetActive(false);
+    }
+
     private void Update()
     {
-        // Allow restart only after failure
-        if (runOver && Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            HandleRKey();
+        }
+
+    }
+
+    private void HandleRKey()
+    {
+        if (!runStarted)
+        {
+            StartRun();
+        }
+        else if (runOver)
         {
             RestartRun();
         }
     }
 
-    public void FailRun()
-    // This method means "the run has failed"
-    // Any system (collision, timer, pit, enemy) can call this to end a run
-    {
-        if (runOver) return;
-        // If the run already ended, do nothing
-     
-        runOver = true;
-        // Mark the run as over so future calls are ignored
+    public void StartRun()
+        {
+            Time.timeScale = 1;
+            runStarted = true;
+            runOver = false;
+            introPanel.gameObject.SetActive(false);
+            gameOverText.gameObject.SetActive(false);
+            winText.gameObject.SetActive(false);
+        }
 
-        Debug.Log("RUN FAILED");
-        // Print a message to the Console to confirm that failure logic is being triggered correctly
+        public void FailRun()
+            // This method means "the run has failed"
+            // Any system (collision, timer, pit, enemy) can call this to end a run
+        {
+            if (runOver) return;
+            // If the run already ended, do nothing
 
-        Time.timeScale = 0f;
-        // Freeze the entire game. This is TEMPORARY DEBUG BEHAVIOR
+            runOver = true;
+            // Mark the run as over so future calls are ignored
+
+            gameOverText.gameObject.SetActive(true);
+            // Show GAME OVER text
+
+            Time.timeScale = 0f;
+            // Freeze the entire game. This is TEMPORARY DEBUG BEHAVIOR
+        }
+
+
+        public void WinRun()
+        {
+            Time.timeScale = 0;
+            runStarted = true;
+            runOver = true;
+            introPanel.gameObject.SetActive(false);
+            gameOverText.gameObject.SetActive(false);
+            winText.gameObject.SetActive(true);
+        }
+
+        public void RestartRun()
+        {
+
+            // Unfreeze time
+            Time.timeScale = 1f;
+            runOver = false;
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene(
+                UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex
+            );
+        }
     }
-    
-    private void RestartRun()
-    {
-        Debug.Log("RESTART");
-
-        // Unfreeze time
-        Time.timeScale = 1f;
-
-        runOver = false;
-        
-        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex
-        );
-}
-}

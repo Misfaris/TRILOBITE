@@ -1,10 +1,12 @@
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
+
 {
     
     // Allows other scripts to access the one ScoreManager in the scene but only ScoreManager can set the value
     public static ScoreManager Instance { get; private set; }
+    public int totalEggs = 30;
     
     //Number of eggs collected
     public int count { get; private set; }
@@ -33,11 +35,13 @@ public class ScoreManager : MonoBehaviour
     {
         count += amount;
         Debug.Log("Eggs collected: " + count);
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (count >= totalEggs)
+        {
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.WinRun();
+            } 
+        }
     }
 }
