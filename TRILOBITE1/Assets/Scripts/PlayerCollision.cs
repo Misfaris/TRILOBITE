@@ -2,10 +2,16 @@ using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
+    public AudioClip eggCollectionSound;
+    private AudioSource playerAudio;
+
+    void Start()
+    {
+        playerAudio = GetComponent<AudioSource>();
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"TRIGGER: {other.name} | trigger={other.isTrigger}");
-
         //Ignore floor
         if (other.CompareTag("Floor")) return;
         
@@ -13,13 +19,10 @@ public class PlayerCollision : MonoBehaviour
         if (other.CompareTag("Egg"))
         {
             other.gameObject.SetActive(false);
-            if (ScoreManager.Instance == null)
-            {
-                Debug.LogError("ScoreManager.Instance is NULL");
-                return;
-            }
+            if (ScoreManager.Instance == null) return;
             
             ScoreManager.Instance.AddEgg(1);
+            playerAudio.PlayOneShot(eggCollectionSound, 1.0f);
             return;
         }
         
