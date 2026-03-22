@@ -6,7 +6,7 @@ public class ScoreManager : MonoBehaviour
     
     // Allows other scripts to access the one ScoreManager in the scene but only ScoreManager can set the value
     public static ScoreManager Instance { get; private set; }
-    public int totalEggs = 30;
+    [SerializeField] public int totalEggs = 30;
     
     //Number of eggs collected
     public int count { get; private set; }

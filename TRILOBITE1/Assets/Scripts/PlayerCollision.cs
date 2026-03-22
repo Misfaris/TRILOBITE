@@ -4,6 +4,7 @@ public class PlayerCollision : MonoBehaviour
 {
     public AudioClip eggCollectionSound;
     private AudioSource playerAudio;
+    [SerializeField] private float eggVolume = 1.0f;
 
     void Start()
     {
@@ -22,7 +23,7 @@ public class PlayerCollision : MonoBehaviour
             if (ScoreManager.Instance == null) return;
             
             ScoreManager.Instance.AddEgg(1);
-            playerAudio.PlayOneShot(eggCollectionSound, 1.0f);
+            playerAudio.PlayOneShot(eggCollectionSound, eggVolume);
             return;
         }
         

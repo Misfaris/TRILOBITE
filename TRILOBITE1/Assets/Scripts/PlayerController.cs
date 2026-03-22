@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float xRange = 15.0f; //how far left/right from the rail centre
+    [SerializeField] public float laneWidth = 15.0f; //how far left/right from the rail centre
     private int currentLane = 0; //current lane
     private Vector3 startLocalPos; // starting local position for LaneOffset
     public float laneSnapSpeed = 30.0f; //how quickly it snaps to the target lane offset
     private float laneOffset; // current x offset we are applying relative to startLocalPos
+    private const int MinLane = -1;
+    private const int MaxLane = 1;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
@@ -24,13 +26,13 @@ public class PlayerController : MonoBehaviour
         
         // This changes lane ONCE per key press and stays there
         if (Input.GetKeyDown(KeyCode.RightArrow))
-            currentLane = Mathf.Max(currentLane - 1, -1);
+            currentLane = Mathf.Max(currentLane - 1, MinLane);
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
-            currentLane = Mathf.Min(currentLane + 1, 1);
+            currentLane = Mathf.Min(currentLane + 1, MaxLane);
         
         //Convert lane index
-        float targetOffset = currentLane * xRange;
+        float targetOffset = currentLane * laneWidth;
 
         
         //Keep Trilobite in bounds
