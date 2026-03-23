@@ -348,6 +348,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eggCollectionSound: {fileID: 8300000, guid: dbce309ce71483546b11350cc8d01e63, type: 3}
+  eggVolume: 1
+  scoreManager: {fileID: 2042863101}
+  gameManager: {fileID: 1668670384}
 --- !u!82 &104932012
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2236,7 +2239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6019f06d43ae564da6359586b82fa8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xRange: 15
+  laneWidth: 15
   laneSnapSpeed: 30
 --- !u!1001 &670496637
 PrefabInstance:
@@ -6119,6 +6122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countText: {fileID: 1969860326}
+  scoreManager: {fileID: 2042863101}
 --- !u!1001 &1970651089
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6252,6 +6256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalEggs: 30
+  gameManager: {fileID: 1668670384}
 --- !u!4 &2042863102
 Transform:
   m_ObjectHideFlags: 0

@@ -5,7 +5,9 @@ public class PlayerCollision : MonoBehaviour
     public AudioClip eggCollectionSound;
     private AudioSource playerAudio;
     [SerializeField] private float eggVolume = 1.0f;
-
+    [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private GameManager gameManager;
+        
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
@@ -20,9 +22,7 @@ public class PlayerCollision : MonoBehaviour
         if (other.CompareTag("Egg"))
         {
             other.gameObject.SetActive(false);
-            if (ScoreManager.Instance == null) return;
-            
-            ScoreManager.Instance.AddEgg(1);
+            scoreManager.AddEgg(1);
             playerAudio.PlayOneShot(eggCollectionSound, eggVolume);
             return;
         }
@@ -30,16 +30,6 @@ public class PlayerCollision : MonoBehaviour
         //FAIL only on obstacles
         if (!other.CompareTag("Obstacle")) return;
 
-        if (GameManager.Instance == null)
-        {
-            Debug.LogError("GameManager.Instance is NULL");
-            return;
-        }
-        GameManager.Instance.FailRun();
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        
+        gameManager.FailRun();
     }
 }
