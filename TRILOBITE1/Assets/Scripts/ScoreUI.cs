@@ -8,15 +8,18 @@ public class ScoreUI : MonoBehaviour
     public TMP_Text countText;
     [SerializeField] private ScoreManager scoreManager;
     
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
         
-        if (scoreManager == null)
+        if (scoreManager != null)
         {
-            countText.text = "Eggs collected: 0";
-            return;
+            scoreManager.OnScoreChanged += UpdateScoreUI;
+            UpdateScoreUI(scoreManager.count);
         }
-        countText.text = "Eggs collected:"+ scoreManager.count;
+    }
+    
+    private void UpdateScoreUI(int newScore)
+    {
+        countText.text = "Eggs collected: " + newScore;
     }
 }
