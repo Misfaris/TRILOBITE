@@ -5451,18 +5451,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'THE RULES ARE SIMPLE:
-
-
-
-    COLLECT ALL 30 EGGS AND YOU WIN
-
-    BUMP
-    INTO SOMETHING AND YOU LOSE
-
-    L/R TO MOVE
-
-    R TO RESTART'
+  m_text: "THE RULES ARE SIMPLE:\n\nCOLLECT ALL 30 EGGS AND YOU WIN\r\nBUMP INTO
+    SOMETHING AND YOU LOSE\r\nLEFT/RIGHT ARROWS TO MOVE\r\nR KEY TO RESTART\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -5519,8 +5509,8 @@ MonoBehaviour:
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
-  m_horizontalMapping: 3
-  m_verticalMapping: 3
+  m_horizontalMapping: 0
+  m_verticalMapping: 1
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
   m_IsTextObjectScaleStatic: 0
