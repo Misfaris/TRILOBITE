@@ -3,9 +3,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] public float laneWidth = 15.0f; //how far left/right from the rail centre
-    private int currentLane = 0; //current lane
+    private int currentLane; //current lane
     private Vector3 startLocalPos; // starting local position for LaneOffset
-    public float laneSnapSpeed = 30.0f; //how quickly it snaps to the target lane offset
+    [SerializeField] private float laneSnapSpeed = 30.0f;//how quickly it snaps to the target lane offset
     private float laneOffset; // current x offset we are applying relative to startLocalPos
     private const int MinLane = -1;
     private const int MaxLane = 1;

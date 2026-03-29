@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     private bool runStarted;
     private bool runOver;
 
-    public static GameManager Instance;
+    public static GameManager Instance { get; private set; }
     // This is a STATIC reference to the only GameManager, "static" means it belongs to the class itself
     // I create this Instance to allow other scripts to call it
 
