@@ -11,25 +11,25 @@ public class GameManager : MonoBehaviour
     private bool runOver;
 
     public static GameManager Instance { get; private set; }
-    // This is a STATIC reference to the only GameManager, "static" means it belongs to the class itself
-    // I create this Instance to allow other scripts to call it
+    //This is a STATIC reference to the only GameManager, "static" means it belongs to the class itself
+    //I create this Instance to allow other scripts to call it
 
     private void Awake()
-        // Awake() is called by Unity before Start()
+        //Awake() is called by Unity before Start()
 
     {
         if (Instance != null)
-            // If an Instance already exists, it means there's already a GameManager in the scene
+            //If an Instance already exists, it means there's already a GameManager in the scene
         {
             Destroy(gameObject);
-            // Destroy THIS GameManager so we don’t end up with two
+            //Destroy THIS GameManager so we don’t end up with two
             return;
-            // Exit Awake() early
+            //Exit Awake() early
         }
 
         Instance = this;
-        // If no GameManager exists yet, this object becomes the Instance
-        // From now on, other scripts can access it
+        //If no GameManager exists yet, this object becomes the Instance
+        //From now on, other scripts can access it
     }
 
     private void Start()
@@ -74,20 +74,20 @@ public class GameManager : MonoBehaviour
         }
 
         public void FailRun()
-            // This method means "the run has failed"
-            // Any system (collision, timer, pit, enemy) can call this to end a run
+            //This method means "the run has failed"
+            //Any system (collision, timer, pit, enemy) can call this to end a run
         {
             if (runOver) return;
-            // If the run already ended, do nothing
+            //If the run already ended, do nothing
 
             runOver = true;
-            // Mark the run as over so future calls are ignored
+            //Mark the run as over so future calls are ignored
 
             gameOverText.gameObject.SetActive(true);
-            // Show GAME OVER text
+            //Show GAME OVER text
 
             Time.timeScale = 0f;
-            // Freeze the entire game. This is TEMPORARY DEBUG BEHAVIOR
+            //Freeze the entire game. This is TEMPORARY DEBUG BEHAVIOR
         }
 
 
@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
         public void RestartRun()
         {
 
-            // Unfreeze time
+            //Unfreeze time
             Time.timeScale = 1f;
             runOver = false;
 

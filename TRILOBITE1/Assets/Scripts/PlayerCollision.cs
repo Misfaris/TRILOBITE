@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
-    [SerializeField] private AudioClip eggCollectionSound;
     private AudioSource playerAudio;
+    [SerializeField] private AudioClip eggCollectionSound;
     [SerializeField] private float eggVolume = 1.0f;
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private GameManager gameManager;

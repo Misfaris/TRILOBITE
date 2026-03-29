@@ -1,15 +1,18 @@
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class ScoreManager : MonoBehaviour
 
 {
 
-    // Allows other scripts to access the one ScoreManager in the scene but only ScoreManager can set the value
+    //Allows other scripts to access the one ScoreManager in the scene but only ScoreManager can set the value
     public static ScoreManager Instance { get; private set; }
     [SerializeField] private int totalEggs = 30;
     [SerializeField] private GameManager gameManager;
+    
+    //Event triggered whenever the score changes; sends the updated score to any listeners (like ScoreUI)
     public event System.Action<int> OnScoreChanged;
-
+    
     //Number of eggs collected
     public int count { get; private set; }
 
@@ -25,20 +28,19 @@ public class ScoreManager : MonoBehaviour
         Instance = this;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    //Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         count = 0;
     }
 
 
-    // Public method other scripts can call to add an egg.
+    //Public method other scripts can call to add an egg
     public void AddEgg(int amount)
     {
         count += amount;
-        Debug.Log("Eggs collected: " + count);
 
-        // Notify other scripts (like UI)
+        //Notify other scripts (like UI)
         OnScoreChanged?.Invoke(count);
 
         if (count >= totalEggs)
